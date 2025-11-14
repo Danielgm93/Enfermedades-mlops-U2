@@ -1,5 +1,10 @@
+import os
+import sys
 
-import json
+ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
+if ROOT_DIR not in sys.path:
+    sys.path.append(ROOT_DIR)
+
 from model.rules import predict_status
 
 def test_all_labels():
