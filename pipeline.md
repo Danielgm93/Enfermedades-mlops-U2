@@ -46,40 +46,49 @@
 
 ```mermaid
 flowchart LR
-  subgraph Ingesta
-    A[EHR/CSV/APIs] --> B[Validación de datos
-(esquema/rangos)]
-    B --> C[Feature Store
- + Time-travel]
+
+  subgraph DIS ["Diseno del sistema"]
+    D1["Definir problema\nEnfermedades comunes y huerfanas"]
+    D2["Restricciones y limitaciones\nPocos datos, privacidad, no es diagnostico"]
+    D3["Definir tipos de datos\nSintomas numericos, categoricos, texto"]
+    D4["Definir salidas del modelo\nNO ENFERMO / LEVE / AGUDA / CRONICA"]
+    D5["Definir metricas y objetivos\nRecall en huerfanas, precision global"]
+
+    D1 --> D2 --> D3 --> D4 --> D5
   end
 
-  subgraph Entrenamiento
-    C --> D[Preparación de datos]
-    D --> E[Entrenamiento
-(baseline / transfer / meta)]
-    E --> F[Evaluación & Calibración]
-    F -->|OK| G[Registro de Modelo
-(Model Registry)]
+  subgraph DEV ["Desarrollo del modelo"]
+    S1["Fuentes de datos\nEHR, historiales, CSV, estudios"]
+    S2["Ingesta y validacion\nEsquema, rangos, faltantes, outliers"]
+    S3["Preprocesamiento\nNormalizacion, codificacion, train/val/test"]
+    S4["Modelado para comunes\nModelos clasicos bien entrenados"]
+    S5["Modelado para huerfanas\nFew-shot, transfer learning, reglas"]
+    S6["Evaluacion y seleccion\nMetricas por clase y tipo de enfermedad"]
+    S7["Empaquetar logica de prediccion\nFuncion predict_status"]
+
+    S1 --> S2 --> S3 --> S4
+    S3 --> S5
+    S4 --> S6
+    S5 --> S6 --> S7
   end
 
-  subgraph Despliegue
-    G --> H[Imagen Docker
-(Serving API)]
-    H --> I[Orquestación (K8s/Edge)]
+  subgraph PROD ["Produccion y MLOps"]
+    P1["Definir contrato de entrada/salida\nJSON con al menos 3 sintomas"]
+    P2["Implementar servicio web\nFastAPI/Flask con endpoint /predict"]
+    P3["Pruebas unitarias\nCasos que cubren los 4 estados"]
+    P4["Dockerfile\nInstalar dependencias y exponer servicio"]
+    P5["Construir imagen Docker\ndocker build ..."]
+    P6["Medico ejecuta contenedor\ndocker run -p ... rare-disease"]
+    P7["Uso en consulta\nMedico envia sintomas y recibe estado"]
+    P8["Monitoreo basico\nLogs, errores, patrones de uso"]
+    P9["Recoleccion de nuevos datos\nPara reentrenar y mejorar el modelo"]
+
+    P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8 --> P9
   end
 
-  subgraph Operación
-    I --> J[Predicciones]
-    J --> K[Monitoreo servicio]
-    J --> L[Monitoreo datos]
-    J --> M[Monitoreo modelo]
-    L --> N{Drift?}
-    M --> N
-    N -->|Sí| O[Re-entrenar]
-    O --> E
-    N -->|No| P[Operación continua]
-  end
-```
+  D5 --> S1
+  S7 --> P1
+ ```
 
 ## 5) Notas de implementación mínima (para la práctica)
 
