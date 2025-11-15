@@ -1,3 +1,4 @@
+from typing import Any, Dict
 
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -6,12 +7,28 @@ from model.rules import predict_status
 
 app = FastAPI(title="Rare Disease Triage API", version="1.0.0")
 
+
 class InputPayload(BaseModel):
     fever: confloat(ge=0, le=10) = Field(..., description="Fiebre (0-10)")
     pain: confloat(ge=0, le=10) = Field(..., description="Dolor (0-10)")
     days: confloat(ge=0) = Field(..., description="Duración en días (>=0)")
     comorbidity: confloat(ge=0, le=5) | None = 0
     age: conint(ge=0, le=120) | None = 40
+
+
+@app.get("/health", response_class=JSONResponse)
+def health() -> Dict[str, Any]:
+    """
+    Nueva funcionalidad: endpoint de healthcheck.
+    Sirve para verificar que el servicio está vivo y conocer versión básica.
+    """
+    return {
+        "status": "ok",
+        "service": "rare-disease-triage-api",
+        "version": "1.0.0",
+        "description": "Servicio de triage para enfermedad rara (demo MLOps).",
+    }
+
 
 @app.get("/", response_class=HTMLResponse)
 def index():
@@ -50,6 +67,7 @@ def index():
       </body>
     </html>
     """
+
 
 @app.post("/predict")
 def predict(payload: InputPayload):
