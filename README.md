@@ -89,7 +89,7 @@ En la **Actividad 2** se extendió el proyecto con:
 
 ---
 
-## 3. Uso local (sin Docker)
+## 3. Uso local
 
 ### 3.1. Crear entorno e instalar dependencias
 
@@ -104,6 +104,7 @@ pip install -r requirements.txt
 
 ### 3.2. Ejecutar la API en local
 
+Asumiendo que el módulo de la app es `app.app`:
 
 ```bash
 uvicorn app.app:app --host 0.0.0.0 --port 8000 --reload
