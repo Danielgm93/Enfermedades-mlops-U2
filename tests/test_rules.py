@@ -13,6 +13,9 @@ def test_all_labels():
         ({"fever":2.0,"pain":3,"days":3}, "ENFERMEDAD LEVE"),
         ({"fever":6.0,"pain":6,"days":10,"comorbidity":1}, "ENFERMEDAD AGUDA"),
         ({"fever":4.0,"pain":4,"days":45}, "ENFERMEDAD CRÓNICA"),
+        # Nuevo requerimiento: paciente mayor de 65 con más de 7 días
+        ({"fever":5.0,"pain":5.0,"days":10,"age":70,"comorbidity":1}, "ENFERMEDAD AGUDA"),
     ]
     for x, y in cases:
         assert predict_status(x) == y
+

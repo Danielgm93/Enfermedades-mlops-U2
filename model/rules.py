@@ -43,6 +43,8 @@ def predict_status(features: Dict[str, Any]) -> str:
         return LABELS[1]  # LEVE
     if score < 9.5 and days < 30:
         return LABELS[2]  # AGUDA
+    if age >= 65 and days >= 7:
+        score += 1.5  # Riesgo adicional en mayores
     return LABELS[3]      # CRÓNICA
 
 
