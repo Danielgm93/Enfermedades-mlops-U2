@@ -1,5 +1,5 @@
 # Rare Disease Triage — Demo MLOps con FastAPI y Docker
-- **Autor:** Daniel Garcia
+- **Autor:** DW
 - **Curso:** MLOps – Semanas 3–4: Repo en GitHub + GitHub Actions  
 - **Repositorio:** [mlops-rare-disease](https://github.com/Danielgm93/mlops-rare-disease)
 
