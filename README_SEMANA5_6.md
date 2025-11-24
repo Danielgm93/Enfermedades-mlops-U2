@@ -222,3 +222,10 @@ Métricas: ROC-AUC, F1, PR-AUC, recall para clases raras.
       ├─ pr-ci.yml
       └─ develop-cicd.yml
 ```
+
+## Documentación del pipeline y cambios
+
+El pipeline completo y detallado del sistema se encuentra en **`pipeline.md`**, donde se describe el flujo end-to-end, las tecnologías usadas y las decisiones de diseño.
+
+Los cambios realizados respecto a la propuesta inicial están registrados en **`CHANGELOG.md`**, el cual resume las modificaciones, mejoras y justificaciones incorporadas durante la reestructuración del pipeline.
+
