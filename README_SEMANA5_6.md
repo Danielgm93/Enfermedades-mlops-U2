@@ -216,20 +216,35 @@ Inclusión del diagrama general solicitado.
 
 /mlops-rare-disease
 ├─ README.md
+
 ├─ pipeline.md
+
 ├─ CHANGELOG.md
+
 ├─ Dockerfile
+
 ├─ .dockerignore
+
 ├─ requirements.txt
+
 ├─ app/
+
 │ └─ app.py
+
 ├─ model/
+
 │ └─ rules.py
+
 ├─ tests/
+
 │ └─ test_rules.py
+
 └─ .github/
+
 └─ workflows/
+
 ├─ pr-ci.yml
+
 └─ develop-cicd.yml
 
 8. Documentación del Pipeline y Cambios
